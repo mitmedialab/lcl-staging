@@ -37,7 +37,7 @@ function create_latest_topics_list() {
 	// Reading sample json
 	// taken from https://meta.discourse.org/latest.json
 	// Should be relaced by a call to our instance
-	readTextFile("./sample-category.json", function(text){
+	readTextFile("http://lcl-discuss.media.mit.edu/latest.json", function(text){
 	    var data = JSON.parse(text);
 	    console.log(data);
 
