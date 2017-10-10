@@ -38,6 +38,7 @@ function create_latest_topics_list() {
 	// taken from https://meta.discourse.org/latest.json
 	// Should be relaced by a call to our instance
 	readTextFile("http://lcl-discuss.media.mit.edu/latest.json", function(text){
+	// readTextFile("./sample-category.json", function(text){
 	    var data = JSON.parse(text);
 	    console.log(data);
 
@@ -64,21 +65,21 @@ function format_posts(view) {
 	  process_post(view.post_stream.posts[post]);
 	}
 
-	return Mustache.render(
-	  `{{#post_stream}}
-	    {{#posts}}
-	      <div class="mt-4">
-	        <p class="username">{{display_username}}
-	        <img alt="" width="45" height="45" src="{{avatar}}" class="avatar" title="{{username}}">
-	        <p class="created_at">{{created_formatted}} </p>
-	        <p class="title"> {{ topic_slug}}</p>
-	        <p class="reply_count">{{reply_count}} </p>
-	        <p class="category">{{category_id}} </p>
-	        <a class="link" href={{link}}>Open</a>
-	      </div>
-	      {{/posts}}
-	      {{/post_stream}}
-	  `, view);
+	// return Mustache.render(
+	//   `{{#post_stream}}
+	//     {{#posts}}
+	//       <div class="mt-4">
+	//         <p class="username">{{display_username}}
+	//         <img alt="" width="45" height="45" src="{{avatar}}" class="avatar" title="{{username}}">
+	//         <p class="created_at">{{created_formatted}} </p>
+	//         <p class="title"> {{ topic_slug}}</p>
+	//         <p class="reply_count">{{reply_count}} </p>
+	//         <p class="category">{{category_id}} </p>
+	//         <a class="link" href={{link}}>Open</a>
+	//       </div>
+	//       {{/posts}}
+	//       {{/post_stream}}
+	//   `, view);
 }
 
 /*
@@ -117,43 +118,45 @@ function format_category(view) {
 
 	var topics = view.topic_list.topics;
 
+	var result = "";
+
 	for (var topic in topics) {
 	  process_topic(topics[topic], view);
-	}
 
-	// TODO(morant): Took structure from Meta Discourse - still need a lot of work
-	return Mustache.render(
-	  `{{#topics}}
-  		<div data-topic-id="{{topic_id}}" class="mt-4 mb-4">
-  			<div class="topic-poster">
-					<a data-user-card="{{last_poster_username}}" href="/u/{{last_poster_username}}" class="">
-					  <img alt="" width="45" height="45" src="{{avatar}}" class="avatar" title="{{last_poster_username}}">
-					</a>
-				</div>
-				<div class="main-link">
-	  			<div class="top-row">
-	    			<a href="{{link}}" class="title">{{title}}</a>
-	  			</div>
-		  		<div class="bottom-row">
-		    		<a class="badge-wrapper bullet" href="/c/{{category}}">
-			    		<span class="badge-category-bg" style="background-color: #CEA9A9;"></span>
-			    		<span data-drop-close="true" class="badge-category clear-badge">{{category_id}}</span>
-		    		</a>
-				  </div>
-				</div>
-				<div class="topic-stats">
-				  <div class="num posts-map posts heatmap-" title="This topic has {{reply_count}} replies">
-				  <a href="" class="posts-map badge-posts heatmap-">
-				    <span class="number">{{reply_count}}</span>
-				  </a>
-				</div>
-			  <div class="topic-last-activity">
-			    <a href="{{last_response_link}}">
-			    <span class="relative-date" data-time="{{bumped_at}}" data-format="tiny">Last reply: {{bumped_formatted}}</span></a>
-			  </div>
-			</div>
-	    {{/topics}}
-	  `, view.topic_list);
+	  var t = topics[topic];
+
+	  // TODO(morant): Took structure from Meta Discourse - still need a lot of work
+    result +=
+      '<div data-topic-id="' + t.topic_id +'" class="mt-4 mb-4">\n' +
+      '  <div class="topic-poster">\n' +
+      '    <a data-user-card="' + t.last_poster_username + '" href="/u/' + t.last_poster_username + '" class="">\n' +
+      '      <img alt="" width="45" height="45" src="' + t.avatar + '" class="avatar" title="' + t.last_poster_username + '">\n' +
+      '    </a>\n' +
+      '  </div>\n' +
+      '  <div class="main-link">\n' +
+      '    <div class="top-row">\n' +
+      '      <a href="' + t.link + '" class="title">' + t.title + '</a>\n' +
+      '    </div>\n' +
+      '    <div class="bottom-row">\n' +
+      '      <a class="badge-wrapper bullet" href="/c/' + t.category + '">\n' +
+      '        <span class="badge-category-bg" style="background-color: #CEA9A9;"></span>\n' +
+      '        <span data-drop-close="true" class="badge-category clear-badge">' + t.category_id + '</span>\n' +
+      '      </a>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '  <div class="topic-stats">\n' +
+      '    <div class="num posts-map posts heatmap-" title="This topic has ' + t.reply_count + ' replies">\n' +
+      '      <a href="" class="posts-map badge-posts heatmap-">\n' +
+      '        <span class="number">' + t.reply_count + '</span>\n' +
+      '      </a>\n' +
+      '    </div>\n' +
+      '  <div class="topic-last-activity">\n' +
+      '    <a href="' + t.last_response_link + '">\n' +
+      '    <span class="relative-date" data-time="' + t.bumped_at + '" data-format="tiny">Last reply: ' + t.bumped_formatted + '</span></a>' +
+      '  </div>\n' +
+      '</div>\n';
+  }
+  return result;
 }
 
 /*
