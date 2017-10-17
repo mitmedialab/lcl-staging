@@ -1,4 +1,5 @@
-# lcl-staging
-a place to test things out for the new LCL site
+# Learning Creative Learning (LCL)
 
-See it live: http://learn.media.mit.edu/lcl-staging/
+This repository generates the offical website for Learning Creative Learning.
+
+You can visit the site here > http://learn.media.mit.edu/lcl

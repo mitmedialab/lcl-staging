@@ -1,37 +1,27 @@
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+body{
+	background-image: url("./llk-pattern.png");
+	background-size: 1500px;
+    background-repeat: repeat;
+    background-color: #000;
+    font-family: 'Lato', Helvetica, sans-serif;
 }
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 75px;
-  font-family: "Lato", Helvetica, sans-serif;
-  background-color: #555;
+
+.main-container{
+	min-height: 100vh;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  min-height: 35px;
-  background-color: #f5f5f5;
+
+#main-card{
+	max-width: 600px;
 }
-body > .container,.container-fluid{
-  padding: 60px 15px 0;
+
+#trailer-video{
+	max-width: 500px;
 }
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-  font-size: 0.8em;
+
+#mc-embedded-subscribe{
+	cursor: pointer;
 }
-.peg-background{
-  background-color: #222;
-  background-image: url("./img/llk-pattern.png");
-  background-size: 250px;
-}
-#scrollspy-container{
-  height: 500px;
-  overflow-y: scroll;
+
+#mc_embed_signup{
+	max-width: 500px;
 }
